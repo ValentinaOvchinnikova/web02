@@ -1,0 +1,37 @@
+{% extends "prilozenie1/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Trial Data Collection</h1>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.patient_id.label_tag }}
+            {{ form.patient_id }}
+            {% if form.patient_id.errors %}
+                <div class="allert allert-danger">{{ form.patient_id.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Select trial</label>
+            <select name="trial_id" class="form-select" required>
+                <option value="">--Select--</option>
+                {% for trial in trials %}
+                <option value="{{forloop.counter0 }}">{{ trial }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            {{ form.condition_score.label_tag }}
+            {{ form.condition_score }}
+            {% if form.condition_score.errors %}
+                <div class="alert alert-danger">{{ form.condition_score.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
