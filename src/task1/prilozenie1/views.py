@@ -5,44 +5,36 @@ from .forms import PatientDataForm
 
 # Create your views here.
 def input_form(request):
-    # Получаю все исследования из базы данных
-    trials = [
-        Trials(name='Trial 1', drug='Placebo'),
-        Trials(name='Trial 2', drug='Placebo'),
-        Trials(name='Trial 3', drug='Placebo'),
-        Trials(name='Trial 4', drug='Placebo'),
-        Trials(name='Trial 5', drug='Placebo'),
-        Trials(name='Trial 6', drug='Placebo'),
-        Trials(name='Trial 7', drug='Placebo'),
-        Trials(name='Trial 1', drug='Ibuprofen'),
-        Trials(name='Trial 2', drug='Ibuprofen'),
-        Trials(name='Trial 3', drug='Ibuprofen'),
-        Trials(name='Trial 4', drug='Ibuprofen'),
-        Trials(name='Trial 5', drug='Ibuprofen'),
-        Trials(name='Trial 6', drug='Ibuprofen'),
-        Trials(name='Trial 7', drug='Ibuprofen'),
+    # Это списки для choices=[] в файле forms.py чтобы был выпадающий список
+    trials = [('', '--Select--'),
+        ('Trial 1', 'Trial 1'),
+        ('Trial 2', 'Trial 2'),
+         ('Trial 3', 'Trial 3'),
+         ('Trial 4', 'Trial 4'),
+         ('Trial 5', 'Trial 5'),
+         ('Trial 6','Trial 6'),
+         ('Trial 7','Trial 7')
     ]
+    drugs = [('', '--Select--'),('Placebo', 'Placebo'),('Ibuprofen', 'Ibuprofen')]
     if request.method == 'POST':
         form = PatientDataForm(request.POST)
-
-        trial_id = request.POST.get('trial_id')
-        select_trial = next((t for t in trials if str(t.id) == trial_id), None)
-
-        if select_trial:
-            form.fields['drug'].choices = [('Placebo', 'Ibuprofen'), (select_trial.drug, select_trial.drug)]
-
+        form.fields['trial'].choices = trials
+        form.fields['drug'].choices = drugs
         if form.is_valid():
+            selected_trial = dict(trials).get(form.cleaned_data['trial'])
+            selected_drug = dict(drugs).get(form.cleaned_data['drug'])
             return render(
-                request, 'prilozenie1/success.html', {
+                request, 'prilozenie1/success.html',
+        {
                 'patient_id' : form.cleaned_data['patient_id'],
-                'trial': select_trial,
+                'trial': selected_trial,
                 'condition': form.cleaned_data['condition_score'],
-                'drug': form.cleaned_data['drug']
+                'drug': selected_drug
                 })
+
     else:
         form = PatientDataForm()
+        form.fields['trial'].choices = trials
+        form.fields['drug'].choices = drugs
 
-    return render(request, 'prilozenie1/input_form.html', {
-                    'trials': trials,
-                    'form': form
-    })
+    return render(request, 'prilozenie1/input_form.html', {'form': form})
