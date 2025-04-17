@@ -1,7 +1,7 @@
 from django.db import models
 
 # Я определила класс Trials который определяет какие поля будут в моей таблице
-# Присвоила тип данных Varchar(100) и verbose_name
+# Присвоила тип данных Varchar(100) и verbose_name, поскольку в этом задании бд не используется, взяла рандомные поля
 
 class Trials(models.Model):
     name = models.CharField(max_length=100, verbose_name="Name of trial")

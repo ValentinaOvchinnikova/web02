@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ввод данных</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Форма ввода данных</h2>
+        <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="update_drugs" value="0">
+
+            <div class="mb-3">
+                <label for="{{ form.patient_id.id_for_label }}" class="form-label">{{ form.patient_id.label }}</label>
+                {{ form.patient_id }}
+                {{ form.patient_id.errors }}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.trial.id_for_label }}" class="form-label">{{ form.trial.label }}</label>
+                <select name="trial" id="id_trial" class="form-select" onchange="this.form.update_drugs.value='1'; this.form.submit()">
+            {% for value, label in form.trial.field.choices %}
+                <option value="{{ value }}" {% if form.trial.value == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+                {{form.trials}}
+        {{ form.trial.errors }}
+            </div>
+
+
+            <div class="mb-3">
+                <label for="{{ form.condition_score.id_for_label }}" class="form-label">{{ form.condition_score.label }}</label>
+                {{ form.condition_score }}
+                {{ form.condition_score.errors }}
+            </div>
+
+            <div class="mb-3">
+                <label for="{{ form.drug.id_for_label }}" class="form-label">{{ form.drug.label }}</label>
+                {{ form.drug }}
+                {{ form.drug.errors }}
+            </div>
+            <input type="hidden" name="update_drugs" value="0">
+            <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+update trials set med = 'Ibuprofen' where trial_name = 'Trial 1';
+update trials set med = 'Paracetamol' where trial_name = 'Trial 2';
+update trials set med = 'Diclofenac' where trial_name = 'Trial 3';
+update trials set med = 'Analgin' where trial_name = 'Trial 4';
+update trials set med = 'Cyston' where trial_name = 'Trial 5';
+update trials set med = 'Zhanin' where trial_name = 'Trial 6';
+update trials set med = 'Ketorolac' where trial_name = 'Trial 7';
+
+Добавила данные в столбец med

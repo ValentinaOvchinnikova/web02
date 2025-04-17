@@ -1,0 +1,17 @@
+{% extends "prilozenie1/base.html" %}
+<!--Если кнопка submit нажата то пользователя переводит на результаты ввода и показывает их-->
+<!--Но только в том случае если данные прошли валидацию-->
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-success">
+        <h2>The dates done</h2>
+        <ul class="mt-3">
+            <li>ID of patient: {{ patient_id }}</li>
+            <li>Trial: {{ trial }}</li>
+            <li>Drug: {{ drug }}</li>
+            <li>Condition score: {{ condition }}</li>
+        </ul>
+    </div>
+    <a href="{% url 'input_form' %}" class="btn btn-primary">Return to form</a>
+</div>
+{% endblock %}
